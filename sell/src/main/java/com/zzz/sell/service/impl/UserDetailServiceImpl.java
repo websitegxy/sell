@@ -31,7 +31,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        long start = System.currentTimeMillis();
         SysUser user = userDao.findUserByUserName(s);
+        logger.info("获取数据库连接耗时" + (System.currentTimeMillis() - start) + "ms");
         if(user == null){
             logger.info("用户不存在");
             throw new UsernameNotFoundException("用户不存在");

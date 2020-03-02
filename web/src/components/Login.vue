@@ -1,44 +1,32 @@
 <template>
-<div>
   <div class="login">
     <div id="logo">
       <span id="project-name">房产直销系统</span>
       <img src="../assets/img/login_logo.jpg">
     </div>
-    <div id="form">
-      <div id="div-form">
-        <ul>
-          <li>
-            <span>账号</span>
-          </li>
-          <li>
-            <input id="input-username" v-model="username" type="text" name="username">
-          </li>
-          <li>
-            <span>密码</span>
-          </li>
-          <li>
-            <input id="input-password" v-model="password" type="password" name="password">
-          </li>
-          <li>
-            <input id="input-remember" type="checkbox" name="remember">
-            <span>记住密码</span>
-          </li>
-          <li>
-            <button id="button-login" v-on:click="login()" class="button">登录</button>
-          </li>
-          <li>
-            <span>还没有账号？</span>
-            <a>创建一个账号</a>
-          </li>
-        </ul>
+    <div id="form-div">
+      <el-form :model="loginForm" status-icon :rules="rules" :label-position="labelPostion" label-width="40px" ref="ruleForm" class="ruleForm" >
+            <el-form-item class="item-form" label="账号" prop="name">
+                <el-input type="text" class="my-input" v-model="loginForm.name" autocomplete="off" placeholder="请输入账号"></el-input>
+            </el-form-item>
+             <el-form-item label="密码" class="item-form" prop="pass">
+              <el-input  type="password" class="my-input" v-model="loginForm.pass" autocomplete="off" placeholder="请输入密码"></el-input>
+            </el-form-item>
+            <el-form-item class="item-form">
+            <el-checkbox label="记住密码"  name="type"></el-checkbox>
+            </el-form-item>
+            <el-form-item class="item-form">
+              <el-button type="primary" @click="login">登录</el-button>
+            </el-form-item>
+            <el-form-item class="item-form">
+              <el-link :underline="false" type="danger">还没有账号？创建一个账号</el-link>
+            </el-form-item>
+      </el-form>
       </div>
-    </div>
     <div class="footer">
       <span>Copyright © 售房网 2020 All Rights Reserved </span>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -48,17 +36,40 @@ export default {
 
   name: 'Login',
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.loginForm.pass !== '') {
+          this.$refs.ruleForm.validateField('pass')
+        }
+        callback()
+      }
+    }
+    var validateName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入账号'))
+      } else {
+        callback()
+      }
+    }
     return {
-      username: '',
-      password: '',
-      baseurl: process.env.BASE_URL
+      labelPostion: 'top',
+      loginForm: {
+        name: '',
+        pass: ''
+      },
+      rules: {
+        pass: [{ validator: validatePass, trigger: 'blur' }],
+        name: [{ validator: validateName, trigger: 'blur' }]
+      }
     }
   },
   methods: {
     login: function () {
       this.$post('/login', {
-        username: this.username,
-        password: this.password
+        username: this.loginForm.name,
+        password: this.loginForm.pass
       })
         .then(response => {
           if (CONSTANT.STATUS_CODE.SUCCESS === response.RespCode) {
@@ -80,7 +91,7 @@ export default {
 .login{
     width: 100vw;
     height: 100vh;
-    background-image: url("../assets/img/background2.jpg");
+    background-image: url("../assets/img/login.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     font-size: 16px;
@@ -100,39 +111,20 @@ export default {
   border-radius: 50%;
   width: 6vw;
 }
-#form{
-  width: 100vw;
-}
-#form > div{
-  background-color: white;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
+#form-div{
+  width: 350px;
   border-radius: 1rem;
-  width: 25vw;
-  height: 30vw;
+  background-color: rgba(0,0,0,0.15);
+  padding: 20px 20px 10px 20px;
   margin: 0 auto;
-  padding: 2rem;
+}
+#form-div button{
+  width: 100%;
+}
+#form-div .item-form{
+  margin-bottom: 4px!important;
 }
 
-#form ul li{
-  width: 100%;
-  margin-bottom: 0.5rem;
-}
-#input-username,#input-password,#button-login{
-  width: 100%;
-  border-radius: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  border: 1px solid rgba(0,0,0,0.15);
-  overflow: visible;
-}
-#button-login{
-  background-color: #007bff;
-  color: #ffffff;
-  border-color: #007bff;
-}
 #project-name{
   font-family: Arial;
   font-size: 30px;
@@ -140,16 +132,13 @@ export default {
   color: rgb(226, 141, 43);
 }
 .footer{
+  width: 350px;
   font-family: Arial;
-  color: grey;
+  color: rgb(85, 82, 82);
   font-size: 16px;
-  position: absolute;
-  bottom: 4vh;
-  left: 50%;
+  margin-top: 100px;
+  margin: 100px auto 100px;
   /* transform: translateX(-50%) translateY(-50%); */
 }
-.footer > span{
-  position: relative;
-  left: -50%;
-}
+
 </style>

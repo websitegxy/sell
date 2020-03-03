@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzz.sell.dao.SysConfigDao">
+    <resultMap id="configMap" type="com.zzz.sell.pojo.SysMerConfig">
+        <result column="configid" property="configId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="findSysConfigByCode" parameterType="string" resultType="string">
+        select
+          configvalue
+        from sys_merchant_config
+        where configcode = #{configCode,jdbcType=VARCHAR}  and issystemconfig ='1'
+    </select>
+
+</mapper>

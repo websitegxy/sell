@@ -41,6 +41,7 @@ public class UserController {
             result.setMsg("用户注册成功");
             result.setStatus(1);
         }
+
         }
         result.setData(user);
         return result;

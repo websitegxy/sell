@@ -5,6 +5,7 @@
         <result column="userid" property="userId" jdbcType="VARCHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="mcid" property="mcid" jdbcType="VARCHAR"/>
         <result column="roleid" property="roleId" jdbcType="VARCHAR"/>
         <result column="createtime" property="createTime" jdbcType="VARCHAR"/>
@@ -21,19 +22,22 @@
         from sys_user where username = #{username,jdbcType=VARCHAR} and isvalid = '1'
     </select>
 
-    <select id="findByPhone" resultType="com.zzz.sell.pojo.SysUser"
+    <select id="findByPhone" resultMap="userMap"
             parameterType="string">
 
-        select * from sys_user where phone = #{phone,jdbcType=VARCHAR} and isvalid = '1'
+        select userid,username,password,phone,mcid,roleid,
+            date_format(createtime,'%Y%m%d%H%i%s') as createtime,
+            date_format(updatetime,'%Y%m%d%H%i%s') as updatetime,
+            useralias,isvalid from sys_user where phone = #{phone,jdbcType=VARCHAR} and isvalid = '1'
 
     </select>
 
     <!-- 增加用户名和密码进行注册 -->
-    <insert id="registerByUsernameAndPassword" parameterType="SysUser">
+    <insert id="registerByUsernameAndPassword" parameterType="com.zzz.sell.pojo.SysUser">
 
-        insert into sys_user (phone,password)
+        insert into sys_user (username,phone,password,isvalid,createtime)
         values
-        (#{phone},#{password})
+        (#{phone},#{phone},#{password},'1',now())
 
     </insert>
 

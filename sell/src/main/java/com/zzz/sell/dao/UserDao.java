@@ -9,5 +9,5 @@ public interface UserDao {
      //根据手机号查询
      SysUser findByPhone(String phone);
      //注册用户和密码
-     void registerByUsernameAndPassword(SysUser user);
+     int registerByUsernameAndPassword(SysUser user);
 }

@@ -13,12 +13,16 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public boolean Regist(SysUser user) {
-        // 判断用户是否重复注册
-        if (userDao.findByPhone(user.getPhone()) == null) {
-            userDao.registerByUsernameAndPassword(user);
-            return false;
+    public boolean registByPhone(SysUser user) {
+        if(userDao.registerByUsernameAndPassword(user) == 1){
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean existUserByPhone(SysUser user) {
+
+        return userDao.findByPhone(user.getPhone()) != null;
     }
 }

@@ -7,4 +7,5 @@ package com.zzz.sell.contants;
  */
 public class TokenContants {
     public static final String TOKEN_LOGIN = "login";
+    public static final String VERIFY_CODE = "verifyCode";
 }

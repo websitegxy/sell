@@ -14,10 +14,12 @@ import lombok.ToString;
 @Data
 @ToString
 public class RegisterReqVo {
-    @ApiModelProperty(value = "账号",example = "123456")
+    @ApiModelProperty(value = "账号",example = "123456",required = false)
     private String username;
-    @ApiModelProperty(value = "密码",example = "123456")
+    @ApiModelProperty(value = "密码",example = "123456",required = true)
     private String password;
-    @ApiModelProperty(value= "手机号",example = "15221069068")
+    @ApiModelProperty(value= "手机号",example = "15221069068",required = false)
     private String phone;
+    @ApiModelProperty(value="手机验证码",example = "123456",required = false)
+    private String verifyCode;
 }

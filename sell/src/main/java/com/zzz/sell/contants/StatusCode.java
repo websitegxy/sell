@@ -18,5 +18,9 @@ public class StatusCode {
     public final static String LOGIN_ERR_PASSWORD_DETAIL = "账号或密码错误";
     public final static String LOGIN_NOT_PERMIT = "0005";
     public final static String LOGIN_NOT_PERMIT_DETAIL = "无访问权限";
-
+    public final static String ERR_PARAM = "0006";
+    public final static String ERR_PARAM_DETAIL = "参数错误";
+    public final static String ERR_PARAM_USEREXIST = "用户已存在";
+    public final static String ERR_CODE = "9999";
+    public final static String ERR_CODE_DETAIL = "系统错误";
 }

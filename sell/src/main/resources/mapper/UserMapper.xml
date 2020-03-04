@@ -21,4 +21,20 @@
         from sys_user where username = #{username,jdbcType=VARCHAR} and isvalid = '1'
     </select>
 
+    <select id="findByPhone" resultType="com.zzz.sell.pojo.SysUser"
+            parameterType="string">
+
+        select * from sys_user where phone = #{phone,jdbcType=VARCHAR} and isvalid = '1'
+
+    </select>
+
+    <!-- 增加用户名和密码进行注册 -->
+    <insert id="registerByUsernameAndPassword" parameterType="SysUser">
+
+        insert into sys_user (phone,password)
+        values
+        (#{phone},#{password})
+
+    </insert>
+
 </mapper>

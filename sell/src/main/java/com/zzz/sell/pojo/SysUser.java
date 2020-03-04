@@ -19,6 +19,7 @@ import java.util.List;
 @ToString
 public class SysUser implements UserDetails{
     private String userId;
+    private String phone;
     private String username;
     private String password;
     private String mcid;
@@ -33,6 +34,16 @@ public class SysUser implements UserDetails{
         List<GrantedAuthority> roleList = new ArrayList<>();
         roleList.add(new SimpleGrantedAuthority(this.roleId));
         return roleList;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
     }
 
     @Override
@@ -54,4 +65,9 @@ public class SysUser implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
 }

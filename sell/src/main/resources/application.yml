@@ -1,0 +1,6 @@
+executor:
+    corePoolSize: 500
+    maxPoolSize: 1000
+    queueCapacity: 50
+    keepAliveSeconds: 60
+    threadNamePrefix: XCExecutor-

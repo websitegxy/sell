@@ -45,7 +45,7 @@ public class SelfUsernamePasswordAuthencationFilter extends UsernamePasswordAuth
     protected String obtainPassword(HttpServletRequest request) {
             //json方式登录
             if(bean != null) {
-                return bean.getUsername();
+                return bean.getPassword();
             }
         //默认的表单方式登录
         return super.obtainPassword(request);

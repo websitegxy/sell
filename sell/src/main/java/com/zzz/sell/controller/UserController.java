@@ -1,23 +1,16 @@
 package com.zzz.sell.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.zzz.sell.contants.StatusCode;
 import com.zzz.sell.contants.TokenContants;
 import com.zzz.sell.exception.CheckParamException;
-import com.zzz.sell.pojo.SysUser;
 import com.zzz.sell.proxy.RegisterProxy;
 import com.zzz.sell.response.HotelResult;
-import com.zzz.sell.service.UserService;
 import com.zzz.sell.utils.SmsUtil;
-import com.zzz.sell.utils.TokenUtil;
 import com.zzz.sell.vo.BaseResponseVo;
 import com.zzz.sell.vo.RegisterReqVo;
 import com.zzz.sell.vo.SendMsgReqVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +27,7 @@ public class UserController {
     private RegisterProxy registerProxy;
     @ApiOperation(value = "注册账号",notes = "注册方式有3种，1.账号密码注册2.手机号注册3.需审核通过后才可注册成功")
     @RequestMapping(value = "/doRegist", method = RequestMethod.POST)
-    public BaseResponseVo doRegist(@ApiParam @RequestBody RegisterReqVo reqVo, @ApiIgnore HttpSession session) {
+    public BaseResponseVo doRegist(@RequestBody RegisterReqVo reqVo, @ApiIgnore HttpSession session) {
         BaseResponseVo respVo = new BaseResponseVo();
         //检验参数
         try{
@@ -100,7 +93,7 @@ public class UserController {
 
     @ApiOperation(value = "发送短信验证码")
     @RequestMapping(value = "/sendMsg", method = RequestMethod.POST)
-    public HotelResult sendMsg(@ApiParam @RequestBody SendMsgReqVo reqVo, HttpSession session) {
+    public HotelResult sendMsg(@RequestBody SendMsgReqVo reqVo, @ApiIgnore HttpSession session) {
         int verifycode = SmsUtil.getRandom();
         SmsUtil.sendSms(reqVo.getPhone(), verifycode);
         session.setAttribute(TokenContants.VERIFY_CODE, String.valueOf(verifycode));
